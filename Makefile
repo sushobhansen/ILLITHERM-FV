@@ -1,15 +1,15 @@
 #Makefile for ILLITHERM-FV
 
 PROGRAM = illithermfv
-SOURCE = illithermfv.cpp classes.cpp
-OBJECTS = illithermfv.o classes.o
+SOURCE = illithermfv.cpp readdata.cpp
+OBJECTS = illithermfv.o readdata.o
 ARCHIVE = illithermfv.tar
 
 CC = g++
 CFLAGS = -lm -I.
 DEPS = illithermfvheaders.h
-OPTIONS = 
-#OPTIONS = -g -debug extended -traceback -O0
+OPTIONS = -std=c++11
+#OPTIONS = -std=c++11 -g -debug extended -traceback -O0
 
 %.o: %.cpp $(DEPS)
 	$(CC) $(OPTIONS) -c -o $@ $< $(CFLAGS)

@@ -18,7 +18,7 @@
  *Variables must be tab delimited
  -------------------------------------------------------------------------*/
  
-object	stabilizedLayers
+object	granularLayers
 Layers	2
 layer	type	thickness	k	rho	cp	albedo	emissivity	nodes
 1	PCC	0.2	1.2	2500	600	0.3	0.85	10

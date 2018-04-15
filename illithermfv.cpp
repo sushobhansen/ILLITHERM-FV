@@ -3,24 +3,13 @@
 int main(){
 	
 	/*Declarations*/
+	vector<stabilizedLayer> stabilizedLayerVector;
 	
-	ifstream inputFile;
+	//Read data for stabilized layers
 	
-	try{
-		inputFile.open("constant/stabilizedLayersDict");
-		
-		//Check if file opens, else throw exception
-		if(!inputFile) {
-				throw runtime_error("Could not open file, check file name and path.\n");
-			}
-		
-		}
-	catch(exception& e){
-		cout << "Error: " << e.what();
-		exit(0);
-	}
+	readStabilizedLayers(stabilizedLayerVector);
 	
-	inputFile.close();
+	
 	
 	
 	return 0;
