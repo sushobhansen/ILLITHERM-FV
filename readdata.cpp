@@ -79,3 +79,87 @@ void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector){
 	
 	
 }
+
+void readGranularLayers(vector<granularLayer> &granularLayerVector){
+	int i, noOfGranularLayers;
+	string stemp;
+	ifstream inputFile;
+	
+	try{
+		
+		inputFile.open("constant/granularLayersDict");
+		//Check if file opens, else throw exception
+		if(!inputFile.is_open()) {
+				throw runtime_error("Could not open file, check file name and path.\n");
+			}
+		
+		for(i=0;i<28;i++){getline(inputFile,stemp);} //Skip headers
+		
+		getline(inputFile,stemp,'\t'); //Object
+		getline(inputFile,stemp); //Read object
+		
+		//Check if object is granularLayers
+		if(!stemp.compare("granularLayers")) {
+			throw runtime_error("This file is not for granular layers. Check object field in file.\n");
+		}
+		
+		//Read number of layers
+		getline(inputFile,stemp,'\t'); //Layers keyword
+		getline(inputFile,stemp); //No of layers in stemp
+		noOfGranularLayers = stoi(stemp);
+		getline(inputFile,stemp); //Skip column headers line
+		
+		//Create stabilizedLayer objects in the stabilizedLayerVector to store properties
+		granularLayerVector.resize(noOfGranularLayers);
+		
+		for(i=0;i<noOfGranularLayers;i++){
+			getline(inputFile,stemp,'\t'); //Layer number
+			granularLayerVector[i].number = stoi(stemp);
+			getline(inputFile,stemp,'\t'); //Layer type
+			granularLayerVector[i].type = stemp;
+			getline(inputFile,stemp,'\t'); //Thickness
+			granularLayerVector[i].thickness = stof(stemp);
+			
+			//Check final layer thickness
+			if(i==noOfGranularLayers-1){
+				if(granularLayerVector[i].thickness<1000.0){
+					cout << "Current subgrade thickness is " << granularLayerVector[i].thickness << " mm.\n";
+					throw runtime_error("Subgrade must be thick, at least 1000 mm, but preferably several thousand mm.\n");
+				}
+			}
+			
+			getline(inputFile,stemp,'\t'); //k
+			granularLayerVector[i].k = stof(stemp);
+			getline(inputFile,stemp,'\t'); //rho
+			granularLayerVector[i].rho = stof(stemp);
+			getline(inputFile,stemp,'\t'); //cp
+			granularLayerVector[i].cp = stof(stemp);
+			getline(inputFile,stemp,'\t'); //owc
+			granularLayerVector[i].owc = stof(stemp);
+			getline(inputFile,stemp,'\t'); //a
+			granularLayerVector[i].a = stof(stemp);
+			getline(inputFile,stemp,'\t'); //b
+			granularLayerVector[i].b = stof(stemp);
+			getline(inputFile,stemp,'\t'); //c
+			granularLayerVector[i].c = stof(stemp);
+			getline(inputFile,stemp,'\t'); //hr
+			granularLayerVector[i].hr = stof(stemp);
+			getline(inputFile,stemp,'\t'); //PI
+			granularLayerVector[i].PI = stof(stemp);
+			getline(inputFile,stemp,'\t'); //D60
+			granularLayerVector[i].D60 = stof(stemp);
+			getline(inputFile,stemp,'\t'); //P200
+			granularLayerVector[i].P200 = stof(stemp);
+			getline(inputFile,stemp,'\t'); //P4
+			granularLayerVector[i].P4 = stof(stemp);
+			getline(inputFile,stemp,'\t'); //nodes
+			granularLayerVector[i].nodes = stoi(stemp);
+		}
+		inputFile.close();
+	}
+	catch(exception& e){
+		cout << "Error: " << e.what() << "\n";
+		exit(0);
+	}
+	
+}

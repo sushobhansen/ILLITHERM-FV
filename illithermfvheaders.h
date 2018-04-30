@@ -32,5 +32,32 @@ class stabilizedLayer
 		}
 };
 
+class granularLayer
+{
+	public:
+		int number;
+		string type;
+		float thickness;
+		float k;
+		float rho;
+		float cp;
+		float owc;
+		float a;
+		float b;
+		float c;
+		float hr;
+		float PI;
+		float D60;
+		float P200;
+		float P4;
+		int nodes;
+		
+		//Member functions
+		
+		//Constructors
+		granularLayer(){}
+};
+
 /*Function prototypes*/
 void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector);
+void readGranularLayers(vector<granularLayer> &granularLayerVector);
