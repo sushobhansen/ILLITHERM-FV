@@ -58,6 +58,26 @@ class granularLayer
 		granularLayer(){}
 };
 
+class weather
+{
+	public:
+		int caseNo;
+		int	Year;
+		int	Month;
+		int	Day;
+		int	Hour;
+		float AirTemp;
+		float Wind;
+		float Sun;
+		float WTDepth;
+		
+		//Member functions
+		
+		//Constructors
+		weather(){}
+};
+
 /*Function prototypes*/
 void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector);
 void readGranularLayers(vector<granularLayer> &granularLayerVector);
+void readWeather(vector<weather> &weatherVector);

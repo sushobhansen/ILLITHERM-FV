@@ -1,0 +1,23 @@
+/*------------------------------C++--------------------------------------
+ *		Illinois Thermal Analysis Program - Finite Volume	
+ *							ILLITHERM-FV
+ *							Version 2.0
+ *				Copyright (c) Sushobhan Sen, 2018
+ ------------------------------------------------------------------------*/
+
+/*-------------------------------Variables-------------------------------
+ *CaseNo	int		Case number (must be unique)
+ *Year		int		Year (four digit number)
+ *Month		int		Month (Jan = 1, Dec = 12)
+ *Day		int		Day 
+ *Hour		int		Hour (Midnight = 0, 11:00 PM = 23)
+ *AirTemp	float	Air Temperature (degrees Celsius)
+ *Wind		float	Max wind speed (m/s)
+ *Sun		float	Percentage of sky which is NOT covered by clouds (1-cloud cover) (%)
+ *WTDepth	float	Depthf of the water table (mm)
+ -------------------------------------------------------------------------*/
+ 
+ object	weather
+ Cases	1
+ CaseNo	Year	Month	Day	Hour	AirTemp	Wind	Sun	WTDepth
+ 1	1999	12	2	8	-12.2	1.2	100	3000

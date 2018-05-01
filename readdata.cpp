@@ -9,7 +9,7 @@ void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector){
 		inputFile.open("constant/stabilizedLayersDict");
 		//Check if file opens, else throw exception
 		if(!inputFile.is_open()) {
-				throw runtime_error("Could not open file, check file name and path.\n");
+				throw runtime_error("Could not open stabilizedLayersDict file, check file name and path.\n");
 			}
 			
 		for(i=0;i<20;i++){getline(inputFile,stemp);} //Skip headers
@@ -90,7 +90,7 @@ void readGranularLayers(vector<granularLayer> &granularLayerVector){
 		inputFile.open("constant/granularLayersDict");
 		//Check if file opens, else throw exception
 		if(!inputFile.is_open()) {
-				throw runtime_error("Could not open file, check file name and path.\n");
+				throw runtime_error("Could not open granularLayersDict file, check file name and path.\n");
 			}
 		
 		for(i=0;i<28;i++){getline(inputFile,stemp);} //Skip headers
@@ -154,6 +154,67 @@ void readGranularLayers(vector<granularLayer> &granularLayerVector){
 			granularLayerVector[i].P4 = stof(stemp);
 			getline(inputFile,stemp,'\t'); //nodes
 			granularLayerVector[i].nodes = stoi(stemp);
+		}
+		inputFile.close();
+	}
+	catch(exception& e){
+		cout << "Error: " << e.what() << "\n";
+		exit(0);
+	}
+	
+}
+
+void readWeather(vector<weather> &weatherVector){
+	
+	int i, noOfWeatherCases;
+	string stemp;
+	ifstream inputFile;
+	
+	try{
+		inputFile.open("constant/weatherDict");
+		//Check if file opens, else throw exception
+		if(!inputFile.is_open()) {
+				throw runtime_error("Could not open weatherDict file, check file name and path.\n");
+			}
+			
+			for(i=0;i<19;i++){getline(inputFile,stemp);} //Skip headers
+		
+		getline(inputFile,stemp,'\t'); //Object
+		getline(inputFile,stemp); //Read object
+		
+		//Check if object is weather
+		if(!stemp.compare("weather")) {
+			throw runtime_error("This file is not for weather. Check object field in file.\n");
+		}
+		
+		//Read number of cases
+		getline(inputFile,stemp,'\t'); //Cases keyword
+		getline(inputFile,stemp); //No of cases in stemp
+		noOfWeatherCases = stoi(stemp);
+		getline(inputFile,stemp); //Skip column headers line
+		
+		//Create stabilizedLayer objects in the stabilizedLayerVector to store properties
+		weatherVector.resize(noOfWeatherCases);
+		
+		for(i=0;i<noOfWeatherCases;i++){
+			getline(inputFile,stemp,'\t'); //Case number
+			weatherVector[i].caseNo = stoi(stemp);
+			getline(inputFile,stemp,'\t'); //Year
+			weatherVector[i].Year = stoi(stemp);
+			getline(inputFile,stemp,'\t'); //Month
+			weatherVector[i].Month = stoi(stemp);
+			getline(inputFile,stemp,'\t'); //Day
+			weatherVector[i].Day = stoi(stemp);
+			getline(inputFile,stemp,'\t'); //Hour
+			weatherVector[i].Hour = stoi(stemp);
+			getline(inputFile,stemp,'\t'); //Air temperature
+			weatherVector[i].AirTemp = stof(stemp);
+			getline(inputFile,stemp,'\t'); //Wind
+			weatherVector[i].Wind = stof(stemp);
+			getline(inputFile,stemp,'\t'); //Sun cover
+			weatherVector[i].Sun = stof(stemp);
+			getline(inputFile,stemp,'\t'); //Depth of water table
+			weatherVector[i].WTDepth = stof(stemp);
 		}
 		inputFile.close();
 	}
