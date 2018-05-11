@@ -7,7 +7,7 @@ int main(){
 	vector<granularLayer> granularLayerVector;
 	vector<weather> weatherVector;
 	
-	//Read data for stabilized layers
+	//Read data
 	
 	readStabilizedLayers(stabilizedLayerVector);
 	readGranularLayers(granularLayerVector);

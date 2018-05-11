@@ -2,3 +2,4 @@
 *.plt 
 *.out
 *.o
+*pdf
