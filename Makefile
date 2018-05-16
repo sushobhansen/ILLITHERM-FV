@@ -1,8 +1,8 @@
 #Makefile for ILLITHERM-FV
 
 PROGRAM = illithermfv
-SOURCE = illithermfv.cpp readdata.cpp
-OBJECTS = illithermfv.o readdata.o
+SOURCE = illithermfv.cpp readdata.cpp mesh.cpp
+OBJECTS = illithermfv.o readdata.o mesh.o
 ARCHIVE = illithermfv.tar
 
 CC = g++

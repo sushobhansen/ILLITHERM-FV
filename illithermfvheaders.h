@@ -81,3 +81,4 @@ class weather
 void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector);
 void readGranularLayers(vector<granularLayer> &granularLayerVector);
 void readWeather(vector<weather> &weatherVector);
+void defineMesh(vector<float> &x, vector<float> &dx, vector<float> &alpha, vector<stabilizedLayer> stabilizedLayerVector, vector<granularLayer> granularLayerVector, int noOfElements);

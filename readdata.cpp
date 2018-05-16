@@ -120,9 +120,9 @@ void readGranularLayers(vector<granularLayer> &granularLayerVector){
 			getline(inputFile,stemp,'\t'); //Thickness
 			granularLayerVector[i].thickness = stof(stemp);
 			
-			//Check final layer thickness
+			//Check final layer thickness. Note that layer thickness in input file is set in meters
 			if(i==noOfGranularLayers-1){
-				if(granularLayerVector[i].thickness<1000.0){
+				if(granularLayerVector[i].thickness<1.0){
 					cout << "Current subgrade thickness is " << granularLayerVector[i].thickness << " mm.\n";
 					throw runtime_error("Subgrade must be thick, at least 1000 mm, but preferably several thousand mm.\n");
 				}
