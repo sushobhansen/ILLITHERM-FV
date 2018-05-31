@@ -193,7 +193,7 @@ void readWeather(vector<weather> &weatherVector){
 		noOfWeatherCases = stoi(stemp);
 		getline(inputFile,stemp); //Skip column headers line
 		
-		//Create stabilizedLayer objects in the stabilizedLayerVector to store properties
+		//Create weather objects in the weatherVector to store each case
 		weatherVector.resize(noOfWeatherCases);
 		
 		for(i=0;i<noOfWeatherCases;i++){
@@ -215,6 +215,10 @@ void readWeather(vector<weather> &weatherVector){
 			weatherVector[i].Sun = stof(stemp);
 			getline(inputFile,stemp,'\t'); //Depth of water table
 			weatherVector[i].WTDepth = stof(stemp);
+			getline(inputFile,stemp,'\t'); //Latitude
+			weatherVector[i].Lat = stof(stemp);
+			getline(inputFile,stemp,'\t'); //Longitude
+			weatherVector[i].Long = stof(stemp);
 		}
 		inputFile.close();
 	}

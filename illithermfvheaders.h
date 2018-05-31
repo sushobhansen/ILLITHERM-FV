@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <vector>
 #include <limits>
+#include <math.h>
 
 using namespace std;
 
@@ -70,6 +71,8 @@ class weather
 		float Wind;
 		float Sun;
 		float WTDepth;
+		float Lat;
+		float Long;
 		
 		//Member functions
 		
@@ -82,3 +85,4 @@ void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector);
 void readGranularLayers(vector<granularLayer> &granularLayerVector);
 void readWeather(vector<weather> &weatherVector);
 void defineMesh(vector<float> &x, vector<float> &dx, vector<float> &alpha, vector<stabilizedLayer> stabilizedLayerVector, vector<granularLayer> granularLayerVector, int noOfElements);
+float solar(weather weatherObject);

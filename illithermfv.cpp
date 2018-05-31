@@ -8,6 +8,7 @@ int main(){
 	vector<granularLayer> granularLayerVector;
 	vector<weather> weatherVector;
 	vector<float> x,dx,alpha;
+	float solarrad;
 	
 	//Read data
 	readStabilizedLayers(stabilizedLayerVector);
@@ -26,6 +27,12 @@ int main(){
 	}
 	
 	defineMesh(x, dx, alpha, stabilizedLayerVector, granularLayerVector, noOfElements);
+	
+		
+	//Begin loop for each weather case
+	for(int i=0;i<weatherVector.size();i++){
+		solarrad = solar(weatherVector[i]);
+	}
 	
 	return 0;
 }
