@@ -70,7 +70,7 @@ class weather
 		float AirTemp;
 		float Wind;
 		float Sun;
-		float WTDepth;
+		float Tdp;
 		float Lat;
 		float Long;
 		
@@ -86,3 +86,4 @@ void readGranularLayers(vector<granularLayer> &granularLayerVector);
 void readWeather(vector<weather> &weatherVector);
 void defineMesh(vector<float> &x, vector<float> &dx, vector<float> &alpha, vector<stabilizedLayer> stabilizedLayerVector, vector<granularLayer> granularLayerVector, int noOfElements);
 float solar(weather weatherObject);
+float longwave(weather weatherObject, float Ts, float emissivity);

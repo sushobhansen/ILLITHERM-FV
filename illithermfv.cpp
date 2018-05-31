@@ -7,8 +7,8 @@ int main(){
 	vector<stabilizedLayer> stabilizedLayerVector;
 	vector<granularLayer> granularLayerVector;
 	vector<weather> weatherVector;
-	vector<float> x,dx,alpha;
-	float solarrad;
+	vector<float> x,dx,alpha,T;
+	float solarrad, qirr;
 	
 	//Read data
 	readStabilizedLayers(stabilizedLayerVector);
@@ -27,11 +27,21 @@ int main(){
 	}
 	
 	defineMesh(x, dx, alpha, stabilizedLayerVector, granularLayerVector, noOfElements);
+	T.resize(noOfElements);
+	
+	
 	
 		
 	//Begin loop for each weather case
 	for(int i=0;i<weatherVector.size();i++){
+		
+		//Initialize temperature field
+		for(int j=0;j<noOfElements;j++){
+		T[j] = weatherVector[i].AirTemp;
+		}
+		
 		solarrad = solar(weatherVector[i]);
+		qirr = longwave(weatherVector[i], T[0], stabilizedLayerVector[0].emissivity);
 	}
 	
 	return 0;

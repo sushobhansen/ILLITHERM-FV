@@ -56,3 +56,17 @@ float solar(weather weatherObject){
 	}
 	//Verified that this works - SS 5.31.18
 }
+
+float longwave(weather weatherObject, float Ts, float emissivity){
+	float const sigma = 5.67*powf(10,-8); //Stefan-Boltzmann constant of 5.67e-8 Wm/K^4 
+	float esky, Tsky, irraditation;
+	
+	/*Sky emissivity from Berdahl and Martin (1982)*/
+	/*Does not have to be extremely accurate, therefore time and pressure corrections are ignored*/
+	esky = 0.711 + 0.56*(weatherObject.Tdp/100) + 0.73*powf(weatherObject.Tdp/100,2.0);
+	Tsky = weatherObject.AirTemp * powf(esky,0.25);
+	irraditation = sigma*emissivity*(powf(Tsky,4.0)-powf(Ts,4.0));
+	//Verified - SS 5.31.2018
+	
+	return irraditation;
+}

@@ -14,12 +14,12 @@
  *AirTemp	float	Air Temperature (degrees Celsius)
  *Wind		float	Max wind speed (m/s)
  *Sun		float	Percentage of sky which is NOT covered by clouds (1-cloud cover) (%)
- *WTDepth	float	Depthf of the water table (mm)
+ *Tdp		float	Dew point temperature (degrees Celsius)
  *Lat		float	Latitude as a decimal (N is positive, S is negative)
  *Long		float	Longitude as a decimal (E is positive, W is negative)
  -------------------------------------------------------------------------*/
  
  object	weather
  Cases	1
- CaseNo	Year	Month	Day	Hour	AirTemp	Wind	Sun	WTDepth	Lat	Long
- 1	1999	12	6	8	-12.2	1.2	100	3000	40.11	-88.24
+ CaseNo	Year	Month	Day	Hour	AirTemp	Wind	Sun	Tdp	Lat	Long
+ 1	1999	12	6	8	-12.2	1.2	100	-14.3	40.11	-88.24

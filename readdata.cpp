@@ -213,8 +213,8 @@ void readWeather(vector<weather> &weatherVector){
 			weatherVector[i].Wind = stof(stemp);
 			getline(inputFile,stemp,'\t'); //Sun cover
 			weatherVector[i].Sun = stof(stemp);
-			getline(inputFile,stemp,'\t'); //Depth of water table
-			weatherVector[i].WTDepth = stof(stemp);
+			getline(inputFile,stemp,'\t'); //Dew point
+			weatherVector[i].Tdp = stof(stemp);
 			getline(inputFile,stemp,'\t'); //Latitude
 			weatherVector[i].Lat = stof(stemp);
 			getline(inputFile,stemp,'\t'); //Longitude
