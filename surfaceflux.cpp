@@ -3,12 +3,12 @@
 float solar(weather weatherObject){
 	
 	int N1, N2, N3, N;
-	float declination, rHour, A, B, coshA, HA, Z, tsunrise, tsunset, time;
+	float declination, rHour, A, B, cosh0, h0, Z, h, cosZ, tsunrise, tsunset, time, correction;
 	const float d2r = M_PI/180.0; //Conversion factor, deg to rad 
-	float qsolar;
+	const float S0 = 1367.0; //Solar constant, 1367 W/m2
 	
 	/***** Calculate time of sunrise and sunset *****/
-	/*Based on the thesis by Prof. Dempsey, 1969*/
+	/*See https://en.wikipedia.org/wiki/Solar_irradiance*/
 	/*ASSUMPTIONS - Solar noon is at 12.0, Earth's orbit is circular*/
 	
 	//Day of the year
@@ -17,52 +17,42 @@ float solar(weather weatherObject){
 	N3 = (1+floor((weatherObject.Year - 4*floor(weatherObject.Year/4) + 2)/3));
 	N = N1 - (N2*N3) + weatherObject.Day - 30;
 	
+	//Calculate declination angle for N
 	declination = 23.45*d2r*sin(2*M_PI*(284+N)/365);
-	rHour = 15.0*d2r; //One hour (1/15 of a degree) in radians
+	rHour = 15.0*d2r; //One hour (1/15 of a degree) in radians, this is a conversion factor from hours to radians
 	
 	//Calculate A and B coefficients
-	if(declination<0){
-		A = -sin(fabs(declination));
-		B = cos(fabs(declination));
-	}
-	else{
-		A = sin(declination);
-		B = cos(declination);
-	}
+	A = sin(declination);
+	B = cos(declination);
 	
-	//Calculate Z
-	coshA = -(sin(weatherObject.Lat*d2r)*A)/(cos(weatherObject.Lat*d2r)*B);
-	HA = acos(fabs(coshA));
+	//Calculate h0, the hour angle at sunrise or sunset, when the zenith angle Z is zero
+	//Note that cosZ = sin(lat)*A + cos(lat)*B*cos(h), from http://www.atmos.albany.edu/facstaff/brose/classes/ATM623_Spring2015/Notes/Lectures/Lecture11%20--%20Insolation.html
+	cosh0 = -(sin(weatherObject.Lat*d2r)*A)/(cos(weatherObject.Lat*d2r)*B); //cosine of the hour angle at sunrise of sunset, with zenith at 90 degrees
+	h0 = acos(fabs(cosh0)); //hour angle at sunrise and sunset
 	
-	if(coshA<0){
-		Z = 180.0*d2r-HA;
-	}
-	else{
-		Z = HA;
+	if(cosh0<0){
+		//h0 can only be between 0 and 180 deg, so rescale for it
+		h0 = 180.0*d2r-h0;
 	}
 	
 	//Calculate tsunrise and tsunset
-	time = Z/rHour;
+	time = h0/rHour; //Z radians to hours
 	tsunrise = 12.0 - time;
 	tsunset = 12.0 + time;
-	//Verified that this works - SS 5.30.18
+	//Verified that this works - SS 5.31.18
 	
 	/***** Calculate solar radiation *****/
-	/*Following Qin & Hiller (2011), the solar radiation between sunrise and sunset is assumed to be sinusoidal*/
-	/*The peak value of the radiation is 1000 W/m2 if sun > 90, 700 W/m2 if sun > 30, and 300 W/m2 otherwise*/
-	/*These assumptions for sun are mine, since sunny, partly sunny, and cloudy are not defined in McCollough & Rasmussen (1999)*/
-	/*Noe that this does not depend on latitude (but it should) and Dempsey recommends a different formula. This mostly works for CONUS*/
-	/*Dempsey (in Customary): ExRad = (24.0 / Math.PI) * 444.7 * 1 * Math.Sin(latitude * d2r) * A * (Z - Math.Tan(Z))*/
-	
-	if(weatherObject.Sun > 90){qsolar = 1000.0;}
-	else if(weatherObject.Sun > 30){qsolar = 700.0;}
-	else{qsolar = 300.0;}
+	/*Q=S0*cos(Z)*correction*/
+	//Correction factor for radiation reaching the ground is based on Paltineanu et al but with instantaneous values
+	h = (12.0-weatherObject.Hour)*rHour;
+	cosZ = sin(weatherObject.Lat*d2r)*A + cos(weatherObject.Lat*d2r)*B*cos(h);
+	correction = 0.237 + 0.511*weatherObject.Sun/100.0;
 	
 	if(weatherObject.Hour < tsunrise || weatherObject.Hour > tsunset){
 		return 0.0;
 	}
 	else{
-		return qsolar*sin(M_PI*(weatherObject.Hour - tsunrise)/(tsunset - tsunrise));
+		return S0*cosZ*correction;
 	}
-
+	//Verified that this works - SS 5.31.18
 }
