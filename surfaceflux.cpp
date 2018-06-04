@@ -70,3 +70,20 @@ float longwave(weather weatherObject, float Ts, float emissivity){
 	
 	return irraditation;
 }
+
+float convection(weather weatherObject, float Ts){
+	float h, v;
+	
+	v = weatherObject.Wind;
+	
+	//Convection coefficient from Bentz (2000), simpler than Qin & Hiller (2011)
+	if(v<=5){
+		h = 5.6 + 4.0*v;
+	}
+	else{
+		h = 7.2*powf(v,0.78);
+	}
+	
+	//Verified - SS 6.4.18
+	return h*(weatherObject.AirTemp - Ts);
+}

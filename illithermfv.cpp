@@ -8,7 +8,7 @@ int main(){
 	vector<granularLayer> granularLayerVector;
 	vector<weather> weatherVector;
 	vector<float> x,dx,alpha,T;
-	float solarrad, qirr;
+	float solarrad, qirr, qconv;;
 	
 	//Read data
 	readStabilizedLayers(stabilizedLayerVector);
@@ -42,6 +42,8 @@ int main(){
 		
 		solarrad = solar(weatherVector[i]);
 		qirr = longwave(weatherVector[i], T[0], stabilizedLayerVector[0].emissivity);
+		qconv = convection(weatherVector[i], T[0]);
+		cout << qconv << endl;
 	}
 	
 	return 0;

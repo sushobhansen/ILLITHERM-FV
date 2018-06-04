@@ -87,3 +87,4 @@ void readWeather(vector<weather> &weatherVector);
 void defineMesh(vector<float> &x, vector<float> &dx, vector<float> &alpha, vector<stabilizedLayer> stabilizedLayerVector, vector<granularLayer> granularLayerVector, int noOfElements);
 float solar(weather weatherObject);
 float longwave(weather weatherObject, float Ts, float emissivity);
+float convection(weather weatherObject, float Ts);
