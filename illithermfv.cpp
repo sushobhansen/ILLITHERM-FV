@@ -8,9 +8,10 @@ int main(){
 	vector<granularLayer> granularLayerVector;
 	vector<weather> weatherVector;
 	vector<float> x,dx,alpha,T,Tnew;
-	vector<float> a,b,c,d,cstar,dstar;
+	vector<float> a,b,c,d;
 	float solarrad, qirr, qconv, qrad;
-	float dt = 360.0, xi = 0.0, betap, betam, alphap, alpham;
+	float dt = 360.0, xi = -0.03, betap, betam, alphap, alpham;
+	ofstream fout;
 	
 	//Read data
 	readStabilizedLayers(stabilizedLayerVector);
@@ -31,7 +32,7 @@ int main(){
 	//Define mesh (x and dx or each element, also diffusivity of each element)
 	defineMesh(x, dx, alpha, stabilizedLayerVector, granularLayerVector, noOfElements);	
 		
-	//Begin loop for each weather case
+	//Begin loop for each weather case 
 	for(int i=0;i<weatherVector.size();i++){
 		
 		//Initialize temperature field
@@ -41,14 +42,13 @@ int main(){
 		b.assign(noOfElements,0.0);
 		c.assign(noOfElements,0.0);
 		d.assign(noOfElements,0.0);
-		cstar.assign(noOfElements,0.0);
-		dstar.assign(noOfElements,0.0);
 		
 		//Calculate surface energy balance
 		solarrad = solar(weatherVector[i]);
 		qirr = longwave(weatherVector[i], T[0], stabilizedLayerVector[0].emissivity);
 		qconv = convection(weatherVector[i], T[0]);
 		qrad = (solarrad + qirr + qconv)/(stabilizedLayerVector[0].rho*stabilizedLayerVector[0].cp);
+		
 		
 		//Define stiffness matrix [a b c]
 		for(int j=0;j<noOfElements;j++)
@@ -57,17 +57,17 @@ int main(){
 				betap = dx[j]*0.5/(x[j+1]-x[j]);
 				alphap = alpha[j+1]*betap + alpha[j]*(1.0-betap);
 				
-				a[j] = 1.0 + (0.5*dt/dx[j])*alphap/(x[j+1]-x[j]);
-				b[j] = -(0.5*dt/dx[j])*alphap/(x[j+1]-x[j]);
-				c[j] = 0.0;
+				a[j] = 0.0;
+				b[j] = 1.0 + (0.5*dt/dx[j])*alphap/(x[j+1]-x[j]);
+				c[j] = -(0.5*dt/dx[j])*alphap/(x[j+1]-x[j]);
 			}
 			else if(j == noOfElements-1){
 				betam = dx[j]*0.5/(x[j]-x[j-1]);
 				alpham = alpha[j]*(1.0-betam) + alpha[j-1]*betam;
 				
-				a[j] = 0;
-				b[j] = -(0.5*dt/dx[j])*alpham/(x[j]-x[j-1]);
-				c[j] = 1.0 + (0.5*dt/dx[j])*alpham/(x[j]-x[j-1]);
+				a[j] = -(0.5*dt/dx[j])*alpham/(x[j]-x[j-1]);
+				b[j] = 1.0 + (0.5*dt/dx[j])*alpham/(x[j]-x[j-1]);
+				c[j] = 0.0;
 			}
 			else{
 				betap = dx[j]*0.5/(x[j+1]-x[j]);
@@ -82,8 +82,17 @@ int main(){
 			}
 		}
 		
-		//Iterate 10 times to cover the hour and reach convergence
+		//Create output file
+		fout.open(to_string(i)+".csv",ios::trunc);
+		
+		//Iterate 10 times to cover the hour
 		for(int t=0;t<10;t++){
+			//Print current iteration
+			for(int j=0;j<noOfElements;j++){
+				fout << T[j] << ",";
+			}
+			fout << endl;
+			
 			//Define RHS [d]
 			for(int j=0;j<noOfElements;j++){
 				if(j==0){
@@ -108,7 +117,16 @@ int main(){
 					d[j] = T[j-1]*(0.5*dt/dx[j])*alpham/(x[j]-x[j-1]) + T[j]*(1.0-(0.5*dt/dx[j])*((alphap/(x[j+1]-x[j]))+(alpham/(x[j]-x[j-1])))) + T[j+1]*(0.5*dt/dx[j])*alphap/(x[j+1]-x[j]);
 				}
 			}
+			
+			//Solve the system of equations
+			solve(Tnew, a, b, c, d, noOfElements);
+			
+			//Swap solution for new iteration
+			T = Tnew;
+			
 		}
+		
+		fout.close();
 	}
 	
 	return 0;

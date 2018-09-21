@@ -21,5 +21,5 @@
 object	stabilizedLayers
 Layers	2
 layer	type	thickness	k	rho	cp	albedo	emissivity	nodes
-1	PCC	0.2	1.2	2500	600	0.3	0.85	5
-2	ATB	0.4	0.9	2300	800	null	null	5	
+1	PCC	0.2	1.2	2500	600	0.3	0.85	20
+2	ATB	0.4	0.9	2300	800	null	null	20	
