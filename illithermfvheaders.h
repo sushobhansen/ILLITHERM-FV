@@ -89,3 +89,5 @@ float solar(weather weatherObject);
 float longwave(weather weatherObject, float Ts, float emissivity);
 float convection(weather weatherObject, float Ts);
 void solve(vector<float>& Tnew, vector<float> a, vector<float> b, vector<float> c, vector<float> d, int noOfElements);
+void stiffnessmat(vector<float>& a, vector<float>& b, vector<float>& c, vector<float> x, vector<float> dx, vector<float> alpha, float dt, int noOfElements);
+void rhsvector(vector<float>& d, vector<float> T, vector<float> x, vector<float> dx, vector<float> alpha, float dt, float qrad, float xi, int noOfElements);

@@ -32,3 +32,76 @@ void solve(vector<float>& Tnew, vector<float> a, vector<float> b, vector<float> 
 	}
 	
 }
+
+void stiffnessmat(vector<float>& a, vector<float>& b, vector<float>& c, vector<float> x, vector<float> dx, vector<float> alpha, float dt, int noOfElements){
+	
+	float betap, betam, alphap, alpham;
+	
+	/*Piecewise linear finite volume formulation with Crank-Nicolson scheme*/
+	
+	//Define stiffness matrix [a b c]
+	for(int j=0;j<noOfElements;j++)
+	{
+		if(j==0){
+			betap = dx[j]*0.5/(x[j+1]-x[j]);
+			alphap = alpha[j+1]*betap + alpha[j]*(1.0-betap);
+			
+			a[j] = 0.0;
+			b[j] = 1.0 + (0.5*dt/dx[j])*alphap/(x[j+1]-x[j]);
+			c[j] = -(0.5*dt/dx[j])*alphap/(x[j+1]-x[j]);
+		}
+		else if(j == noOfElements-1){
+			betam = dx[j]*0.5/(x[j]-x[j-1]);
+			alpham = alpha[j]*(1.0-betam) + alpha[j-1]*betam;
+			
+			a[j] = -(0.5*dt/dx[j])*alpham/(x[j]-x[j-1]);
+			b[j] = 1.0 + (0.5*dt/dx[j])*alpham/(x[j]-x[j-1]);
+			c[j] = 0.0;
+		}
+		else{
+			betap = dx[j]*0.5/(x[j+1]-x[j]);
+			alphap = alpha[j+1]*betap + alpha[j]*(1.0-betap);
+			
+			betam = dx[j]*0.5/(x[j]-x[j-1]);
+			alpham = alpha[j]*(1.0-betam) + alpha[j-1]*betam;
+			
+			a[j] = -(0.5*dt/dx[j])*alpham/(x[j]-x[j-1]);
+			b[j] = 1.0 + (0.5*dt/dx[j])*((alphap/(x[j+1]-x[j]))+(alpham/(x[j]-x[j-1])));
+			c[j] = -(0.5*dt/dx[j])*alphap/(x[j+1]-x[j]);
+		}
+	}
+	
+}
+
+void rhsvector(vector<float>& d, vector<float> T, vector<float> x, vector<float> dx, vector<float> alpha, float dt, float qrad, float xi, int noOfElements){
+	
+	float betap, betam, alphap, alpham;
+	
+	/*Piecewise linear finite volume formulation with Crank-Nicolson scheme*/
+	
+	//Define RHS vector [d]
+	for(int j=0;j<noOfElements;j++){
+		if(j==0){
+			betap = dx[j]*0.5/(x[j+1]-x[j]);
+			alphap = alpha[j+1]*betap + alpha[j]*(1.0-betap);
+			
+			d[j] = T[j]*(1.0-(0.5*dt/dx[j])*alphap/(x[j+1]-x[j])) + T[j+1]*(0.5*dt/dx[j])*alphap/(x[j+1]-x[j]) + qrad*(dt/dx[j]);
+		}
+		else if(j==noOfElements-1){
+			betam = dx[j]*0.5/(x[j]-x[j-1]);
+			alpham = alpha[j]*(1.0-betam) + alpha[j-1]*betam;
+		
+			d[j] = T[j-1]*(0.5*dt/dx[j])*alpham/(x[j]-x[j-1]) + T[j]*(1.0-(0.5*dt/dx[j])*alpham/(x[j]-x[j-1])) + alpha[j]*xi*(dt/dx[j]);
+		}
+		else{
+			betap = dx[j]*0.5/(x[j+1]-x[j]);
+			alphap = alpha[j+1]*betap + alpha[j]*(1.0-betap);
+			
+			betam = dx[j]*0.5/(x[j]-x[j-1]);
+			alpham = alpha[j]*(1.0-betam) + alpha[j-1]*betam;
+			
+			d[j] = T[j-1]*(0.5*dt/dx[j])*alpham/(x[j]-x[j-1]) + T[j]*(1.0-(0.5*dt/dx[j])*((alphap/(x[j+1]-x[j]))+(alpham/(x[j]-x[j-1])))) + T[j+1]*(0.5*dt/dx[j])*alphap/(x[j+1]-x[j]);
+		}
+	}
+	
+}

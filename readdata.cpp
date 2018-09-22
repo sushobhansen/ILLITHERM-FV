@@ -179,7 +179,7 @@ void readWeather(vector<weather> &weatherVector){
 			
 			for(i=0;i<19;i++){getline(inputFile,stemp);} //Skip headers
 		
-		getline(inputFile,stemp,'\t'); //Object
+		getline(inputFile,stemp,','); //Object
 		getline(inputFile,stemp); //Read object
 		
 		//Check if object is weather
@@ -188,7 +188,7 @@ void readWeather(vector<weather> &weatherVector){
 		}
 		
 		//Read number of cases
-		getline(inputFile,stemp,'\t'); //Cases keyword
+		getline(inputFile,stemp,','); //Cases keyword
 		getline(inputFile,stemp); //No of cases in stemp
 		noOfWeatherCases = stoi(stemp);
 		getline(inputFile,stemp); //Skip column headers line
@@ -197,27 +197,27 @@ void readWeather(vector<weather> &weatherVector){
 		weatherVector.resize(noOfWeatherCases);
 		
 		for(i=0;i<noOfWeatherCases;i++){
-			getline(inputFile,stemp,'\t'); //Case number
+			getline(inputFile,stemp,','); //Case number
 			weatherVector[i].caseNo = stoi(stemp);
-			getline(inputFile,stemp,'\t'); //Year
+			getline(inputFile,stemp,','); //Year
 			weatherVector[i].Year = stoi(stemp);
-			getline(inputFile,stemp,'\t'); //Month
+			getline(inputFile,stemp,','); //Month
 			weatherVector[i].Month = stoi(stemp);
-			getline(inputFile,stemp,'\t'); //Day
+			getline(inputFile,stemp,','); //Day
 			weatherVector[i].Day = stoi(stemp);
-			getline(inputFile,stemp,'\t'); //Hour
+			getline(inputFile,stemp,','); //Hour
 			weatherVector[i].Hour = stoi(stemp);
-			getline(inputFile,stemp,'\t'); //Air temperature
+			getline(inputFile,stemp,','); //Air temperature
 			weatherVector[i].AirTemp = stof(stemp);
-			getline(inputFile,stemp,'\t'); //Wind
+			getline(inputFile,stemp,','); //Wind
 			weatherVector[i].Wind = stof(stemp);
-			getline(inputFile,stemp,'\t'); //Sun cover
+			getline(inputFile,stemp,','); //Sun cover
 			weatherVector[i].Sun = stof(stemp);
-			getline(inputFile,stemp,'\t'); //Dew point
+			getline(inputFile,stemp,','); //Dew point
 			weatherVector[i].Tdp = stof(stemp);
-			getline(inputFile,stemp,'\t'); //Latitude
+			getline(inputFile,stemp,','); //Latitude
 			weatherVector[i].Lat = stof(stemp);
-			getline(inputFile,stemp,'\t'); //Longitude
+			getline(inputFile,stemp,'\n'); //Longitude
 			weatherVector[i].Long = stof(stemp);
 		}
 		inputFile.close();

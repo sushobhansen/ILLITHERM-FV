@@ -19,7 +19,8 @@
  *Long		float	Longitude as a decimal (E is positive, W is negative)
  -------------------------------------------------------------------------*/
  
- object	weather
- Cases	1
- CaseNo	Year	Month	Day	Hour	AirTemp	Wind	Sun	Tdp	Lat	Long
- 1	1999	12	6	8	-12.2	1.2	100	-14.3	40.11	-88.24
+object,weather
+Cases,2
+CaseNo,Year,Month,Day,Hour,AirTemp,Wind,Sun,Tdp,Lat,Long
+1,1999,12,6,8,-12.2,1.2,100,-14.3,40.11,-88.24
+2,1999,12,6,9,-11.2,1.2,100,-14.3,40.11,-88.24
