@@ -10,7 +10,7 @@ int main(){
 	vector<float> x,dx,alpha,T,Tnew;
 	vector<float> a,b,c,d;
 	float solarrad, qirr, qconv, qrad;
-	float dt = 60.0, xi = -0.03;
+	float dt = 60.0, xi = 0.0;
 	int nt;
 	ofstream fout;
 	

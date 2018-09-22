@@ -14,7 +14,7 @@ void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector){
 			
 		for(i=0;i<20;i++){getline(inputFile,stemp);} //Skip headers
 		
-		getline(inputFile,stemp,'\t'); //Object
+		getline(inputFile,stemp,','); //Object
 		getline(inputFile,stemp); //Read object
 		
 		//Check if object is stabilizedLayers
@@ -23,7 +23,7 @@ void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector){
 		}
 		
 		//Read number of layers
-		getline(inputFile,stemp,'\t'); //Layers keyword
+		getline(inputFile,stemp,','); //Layers keyword
 		getline(inputFile,stemp); //No of layers in stemp
 		noOfStabilizedLayers = stoi(stemp);
 		getline(inputFile,stemp); //Skip column headers line
@@ -32,39 +32,39 @@ void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector){
 		stabilizedLayerVector.resize(noOfStabilizedLayers);
 		
 		for(i=0;i<noOfStabilizedLayers;i++) {
-			getline(inputFile,stemp,'\t'); //Layer number
+			getline(inputFile,stemp,','); //Layer number
 			stabilizedLayerVector[i].number = stoi(stemp);
 			if(stabilizedLayerVector[i].number == 1) {
-				getline(inputFile,stemp,'\t'); //Layer type
+				getline(inputFile,stemp,','); //Layer type
 				stabilizedLayerVector[i].type = stemp;
-				getline(inputFile,stemp,'\t'); //Thickness
+				getline(inputFile,stemp,','); //Thickness
 				stabilizedLayerVector[i].thickness = stof(stemp);
-				getline(inputFile,stemp,'\t'); //k
+				getline(inputFile,stemp,','); //k
 				stabilizedLayerVector[i].k = stof(stemp);
-				getline(inputFile,stemp,'\t'); //rho
+				getline(inputFile,stemp,','); //rho
 				stabilizedLayerVector[i].rho = stof(stemp);
-				getline(inputFile,stemp,'\t'); //cp
+				getline(inputFile,stemp,','); //cp
 				stabilizedLayerVector[i].cp = stof(stemp);
-				getline(inputFile,stemp,'\t'); //albedo
+				getline(inputFile,stemp,','); //albedo
 				stabilizedLayerVector[i].albedo = stof(stemp);
-				getline(inputFile,stemp,'\t'); //emissivity
+				getline(inputFile,stemp,','); //emissivity
 				stabilizedLayerVector[i].emissivity = stof(stemp);
 				getline(inputFile,stemp); //nodes
 				stabilizedLayerVector[i].nodes = stoi(stemp);
 			}
 			else {
-				getline(inputFile,stemp,'\t'); //Layer type
+				getline(inputFile,stemp,','); //Layer type
 				stabilizedLayerVector[i].type = stemp;
-				getline(inputFile,stemp,'\t'); //Thickness
+				getline(inputFile,stemp,','); //Thickness
 				stabilizedLayerVector[i].thickness = stof(stemp);
-				getline(inputFile,stemp,'\t'); //k
+				getline(inputFile,stemp,','); //k
 				stabilizedLayerVector[i].k = stof(stemp);
-				getline(inputFile,stemp,'\t'); //rho
+				getline(inputFile,stemp,','); //rho
 				stabilizedLayerVector[i].rho = stof(stemp);
-				getline(inputFile,stemp,'\t'); //cp
+				getline(inputFile,stemp,','); //cp
 				stabilizedLayerVector[i].cp = stof(stemp);
-				getline(inputFile,stemp,'\t'); //albedo - ignore
-				getline(inputFile,stemp,'\t'); //emissivity - ignore
+				getline(inputFile,stemp,','); //albedo - ignore
+				getline(inputFile,stemp,','); //emissivity - ignore
 				getline(inputFile,stemp); //nodes
 				stabilizedLayerVector[i].nodes = stoi(stemp);
 			}
@@ -95,7 +95,7 @@ void readGranularLayers(vector<granularLayer> &granularLayerVector){
 		
 		for(i=0;i<28;i++){getline(inputFile,stemp);} //Skip headers
 		
-		getline(inputFile,stemp,'\t'); //Object
+		getline(inputFile,stemp,','); //Object
 		getline(inputFile,stemp); //Read object
 		
 		//Check if object is granularLayers
@@ -104,7 +104,7 @@ void readGranularLayers(vector<granularLayer> &granularLayerVector){
 		}
 		
 		//Read number of layers
-		getline(inputFile,stemp,'\t'); //Layers keyword
+		getline(inputFile,stemp,','); //Layers keyword
 		getline(inputFile,stemp); //No of layers in stemp
 		noOfGranularLayers = stoi(stemp);
 		getline(inputFile,stemp); //Skip column headers line
@@ -113,11 +113,11 @@ void readGranularLayers(vector<granularLayer> &granularLayerVector){
 		granularLayerVector.resize(noOfGranularLayers);
 		
 		for(i=0;i<noOfGranularLayers;i++){
-			getline(inputFile,stemp,'\t'); //Layer number
+			getline(inputFile,stemp,','); //Layer number
 			granularLayerVector[i].number = stoi(stemp);
-			getline(inputFile,stemp,'\t'); //Layer type
+			getline(inputFile,stemp,','); //Layer type
 			granularLayerVector[i].type = stemp;
-			getline(inputFile,stemp,'\t'); //Thickness
+			getline(inputFile,stemp,','); //Thickness
 			granularLayerVector[i].thickness = stof(stemp);
 			
 			//Check final layer thickness. Note that layer thickness in input file is set in meters
@@ -128,31 +128,31 @@ void readGranularLayers(vector<granularLayer> &granularLayerVector){
 				}
 			}
 			
-			getline(inputFile,stemp,'\t'); //k
+			getline(inputFile,stemp,','); //k
 			granularLayerVector[i].k = stof(stemp);
-			getline(inputFile,stemp,'\t'); //rho
+			getline(inputFile,stemp,','); //rho
 			granularLayerVector[i].rho = stof(stemp);
-			getline(inputFile,stemp,'\t'); //cp
+			getline(inputFile,stemp,','); //cp
 			granularLayerVector[i].cp = stof(stemp);
-			getline(inputFile,stemp,'\t'); //owc
+			getline(inputFile,stemp,','); //owc
 			granularLayerVector[i].owc = stof(stemp);
-			getline(inputFile,stemp,'\t'); //a
+			getline(inputFile,stemp,','); //a
 			granularLayerVector[i].a = stof(stemp);
-			getline(inputFile,stemp,'\t'); //b
+			getline(inputFile,stemp,','); //b
 			granularLayerVector[i].b = stof(stemp);
-			getline(inputFile,stemp,'\t'); //c
+			getline(inputFile,stemp,','); //c
 			granularLayerVector[i].c = stof(stemp);
-			getline(inputFile,stemp,'\t'); //hr
+			getline(inputFile,stemp,','); //hr
 			granularLayerVector[i].hr = stof(stemp);
-			getline(inputFile,stemp,'\t'); //PI
+			getline(inputFile,stemp,','); //PI
 			granularLayerVector[i].PI = stof(stemp);
-			getline(inputFile,stemp,'\t'); //D60
+			getline(inputFile,stemp,','); //D60
 			granularLayerVector[i].D60 = stof(stemp);
-			getline(inputFile,stemp,'\t'); //P200
+			getline(inputFile,stemp,','); //P200
 			granularLayerVector[i].P200 = stof(stemp);
-			getline(inputFile,stemp,'\t'); //P4
+			getline(inputFile,stemp,','); //P4
 			granularLayerVector[i].P4 = stof(stemp);
-			getline(inputFile,stemp,'\t'); //nodes
+			getline(inputFile,stemp,'\n'); //nodes
 			granularLayerVector[i].nodes = stoi(stemp);
 		}
 		inputFile.close();
