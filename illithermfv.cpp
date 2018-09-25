@@ -64,7 +64,7 @@ int main(){
 			//Calculate surface energy balance
 			qirr = longwave(weatherVector[i], T[0], stabilizedLayerVector[0].emissivity);
 			qconv = convection(weatherVector[i], T[0]);
-			qrad = (solarrad + qirr + qconv)/(stabilizedLayerVector[0].rho*stabilizedLayerVector[0].cp);
+			qrad = (solarrad*(1.0-stabilizedLayerVector[0].albedo) + qirr + qconv)/(stabilizedLayerVector[0].rho*stabilizedLayerVector[0].cp);
 			
 			//Define RHS [d]
 			rhsvector(d, T, x, dx, alpha, dt, qrad, xi, noOfElements);
