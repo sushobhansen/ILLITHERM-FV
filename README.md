@@ -6,7 +6,9 @@
  ------------------------------------------------------------------------*/
  
  Variable definitions
+ 
  /*------------------------granularLayersDict----------------------------
+ 
  *layer		int			layer number
  *type		string		PCC, AC, or other (doesn't go into computations)
  *thickness	float		thickness in meters
@@ -25,9 +27,12 @@
  *nodes		int			number of nodes in the layer
  *Variables must be comma delimited
  *Last layer must be of subgrade with a "large" thickness (at least 1 m or 1000 mm)
+ 
  -------------------------------------------------------------------------*/
  
+ 
  /*------------------------stabilizedLayersDict----------------------------
+ 
  *layer		int			layer number
  *type		string		PCC, AC, or other (doesn't go into computations)
  *thickness	float		thickness in meters
@@ -38,9 +43,12 @@
  *emissivity	float	Emissivity - required first layer only, set others to null
  *nodes		int			number of nodes in the layer
  *Variables must be comma delimited
+ 
  -------------------------------------------------------------------------*/
  
+ 
  /*-------------------------------weatherDict-------------------------------
+ 
  *CaseNo	int		Case number (must be unique)
  *Year		int		Year (four digit number)
  *Month		int		Month (Jan = 1, Dec = 12)
@@ -52,4 +60,5 @@
  *Tdp		float	Dew point temperature (degrees Celsius)
  *Lat		float	Latitude as a decimal (N is positive, S is negative)
  *Long		float	Longitude as a decimal (E is positive, W is negative)
+ 
  -------------------------------------------------------------------------*/
