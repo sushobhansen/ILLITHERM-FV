@@ -9,3 +9,4 @@
 *.rar
 *.docx
 *.csv
+!constant/*.csv
