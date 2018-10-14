@@ -6,14 +6,12 @@ void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector){
 	ifstream inputFile;
 	
 	try{
-		inputFile.open("constant/stabilizedLayersDict");
+		inputFile.open("constant/stabilizedLayersDict.csv");
 		//Check if file opens, else throw exception
 		if(!inputFile.is_open()) {
 				throw runtime_error("Could not open stabilizedLayersDict file, check file name and path.\n");
 			}
 			
-		for(i=0;i<20;i++){getline(inputFile,stemp);} //Skip headers
-		
 		getline(inputFile,stemp,','); //Object
 		getline(inputFile,stemp); //Read object
 		
@@ -49,7 +47,7 @@ void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector){
 				stabilizedLayerVector[i].albedo = stof(stemp);
 				getline(inputFile,stemp,','); //emissivity
 				stabilizedLayerVector[i].emissivity = stof(stemp);
-				getline(inputFile,stemp); //nodes
+				getline(inputFile,stemp,'\n'); //nodes
 				stabilizedLayerVector[i].nodes = stoi(stemp);
 			}
 			else {
@@ -65,7 +63,7 @@ void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector){
 				stabilizedLayerVector[i].cp = stof(stemp);
 				getline(inputFile,stemp,','); //albedo - ignore
 				getline(inputFile,stemp,','); //emissivity - ignore
-				getline(inputFile,stemp); //nodes
+				getline(inputFile,stemp,'\n'); //nodes
 				stabilizedLayerVector[i].nodes = stoi(stemp);
 			}
 		}
@@ -87,13 +85,11 @@ void readGranularLayers(vector<granularLayer> &granularLayerVector){
 	
 	try{
 		
-		inputFile.open("constant/granularLayersDict");
+		inputFile.open("constant/granularLayersDict.csv");
 		//Check if file opens, else throw exception
 		if(!inputFile.is_open()) {
 				throw runtime_error("Could not open granularLayersDict file, check file name and path.\n");
 			}
-		
-		for(i=0;i<28;i++){getline(inputFile,stemp);} //Skip headers
 		
 		getline(inputFile,stemp,','); //Object
 		getline(inputFile,stemp); //Read object
@@ -171,13 +167,11 @@ void readWeather(vector<weather> &weatherVector){
 	ifstream inputFile;
 	
 	try{
-		inputFile.open("constant/weatherDict");
+		inputFile.open("constant/weatherDict.csv");
 		//Check if file opens, else throw exception
 		if(!inputFile.is_open()) {
 				throw runtime_error("Could not open weatherDict file, check file name and path.\n");
 			}
-			
-			for(i=0;i<19;i++){getline(inputFile,stemp);} //Skip headers
 		
 		getline(inputFile,stemp,','); //Object
 		getline(inputFile,stemp); //Read object
