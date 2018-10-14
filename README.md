@@ -98,3 +98,6 @@
  *Long		float	Longitude as a decimal (E is positive, W is negative)
  
  -------------------------------------------------------------------------*/
+ 
+ **To compile:** make illithermfv
+ **To run:** ./illithermfv
