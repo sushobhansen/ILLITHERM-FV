@@ -10,7 +10,7 @@ int main(){
 	vector<float> x,dx,alpha,T,Tnew;
 	vector<float> a,b,c,d;
 	float solarrad, qirr, qconv, qrad;
-	float dt = 60.0, xi = 0.0;
+	float dt = 60.0, xi = -0.3;
 	int nt;
 	ofstream fout;
 	
@@ -46,8 +46,15 @@ int main(){
 	//Create output file
 	fout.open("output.csv",ios::trunc);
 	
+	//Write headers in output file
+	fout << "Year" << "," << "Month" << "," << "Day" << "," << "Hour" << ",";
+	for(int j=0;j<noOfElements;j++){
+		fout << x[j]*1000.0 << ",";
+	}	
+	
 	//Initialize temperature field
 	T.assign(noOfElements,weatherVector[0].AirTemp);
+	//T.assign(noOfElements,16.77);
 	Tnew.assign(noOfElements,0.0);
 
 	
@@ -57,7 +64,7 @@ int main(){
 		//Tnew.assign(noOfElements,0.0);
 		
 		//Calculate solar energy ( assumed constant over the hour)
-		solarrad = solar(weatherVector[i]);		
+		solarrad = solar(weatherVector[i]);
 		
 		//Iterate nt times to cover the hour
 		for(int t=0;t<nt;t++){
@@ -77,6 +84,7 @@ int main(){
 		}
 		
 		//Print current case to file
+		fout << weatherVector[i].Year << "," << weatherVector[i].Month << "," << weatherVector[i].Day << "," << weatherVector[i].Hour << ","; 
 		for(int j=0;j<noOfElements;j++){
 			fout << T[j] << ",";
 		}

@@ -10,3 +10,4 @@
 *.docx
 *.csv
 !constant/*.csv
+validation/
