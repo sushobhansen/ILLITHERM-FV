@@ -50,7 +50,8 @@ int main(){
 	fout << "Year" << "," << "Month" << "," << "Day" << "," << "Hour" << ",";
 	for(int j=0;j<noOfElements;j++){
 		fout << x[j]*1000.0 << ",";
-	}	
+	}
+	fout << endl;
 	
 	//Initialize temperature field
 	T.assign(noOfElements,weatherVector[0].AirTemp);
