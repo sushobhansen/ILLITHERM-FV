@@ -93,6 +93,7 @@ int main(){
 		
 	}
 	
+	//cout << T[0] << endl;
 	fout.close();
 	
 	return 0;

@@ -64,8 +64,8 @@ float longwave(weather weatherObject, float Ts, float emissivity){
 	/*Sky emissivity from Berdahl and Martin (1982)*/
 	/*Does not have to be extremely accurate, therefore time and pressure corrections are ignored*/
 	esky = 0.711 + 0.56*(weatherObject.Tdp/100) + 0.73*powf(weatherObject.Tdp/100,2.0);
-	Tsky = weatherObject.AirTemp * powf(esky,0.25);
-	irraditation = sigma*emissivity*(powf(Tsky,4.0)-powf(Ts,4.0));
+	Tsky = (weatherObject.AirTemp+273.15) * powf(esky,0.25);
+	irraditation = sigma*emissivity*(powf(Tsky,4.0)-powf(Ts+273.15,4.0));
 	//Verified - SS 5.31.2018
 	
 	return irraditation;
