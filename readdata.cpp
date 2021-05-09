@@ -1,24 +1,16 @@
 #include "illithermfvheaders.h"
 
-void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector){
+void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector, string stabilizedLayersInputFile){
 	int i, noOfStabilizedLayers;
 	string stemp;
 	ifstream inputFile;
 	
 	try{
-		inputFile.open("constant/stabilizedLayersDict.csv");
+		inputFile.open("constant/"+stabilizedLayersInputFile);
 		//Check if file opens, else throw exception
 		if(!inputFile.is_open()) {
-				throw runtime_error("Could not open stabilizedLayersDict file, check file name and path.\n");
+				throw runtime_error("Could not open "+ stabilizedLayersInputFile +", check file name and path.\n");
 			}
-			
-		getline(inputFile,stemp,','); //Object
-		getline(inputFile,stemp); //Read object
-		
-		//Check if object is stabilizedLayers
-		if(!stemp.compare("stabilizedLayers")) {
-			throw runtime_error("This file is not for stabilized layers. Check object field in file.\n");
-		}
 		
 		//Read number of layers
 		getline(inputFile,stemp,','); //Layers keyword
@@ -32,7 +24,8 @@ void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector){
 		for(i=0;i<noOfStabilizedLayers;i++) {
 			getline(inputFile,stemp,','); //Layer number
 			stabilizedLayerVector[i].number = stoi(stemp);
-			if(stabilizedLayerVector[i].number == 1) {
+			
+			if(stabilizedLayerVector[i].number == 1) { //First layer reads optical properties
 				getline(inputFile,stemp,','); //Layer type
 				stabilizedLayerVector[i].type = stemp;
 				getline(inputFile,stemp,','); //Thickness
@@ -72,32 +65,25 @@ void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector){
 	}
 	catch(exception& e){
 		cout << "Error: " << e.what() << "\n";
+		cout << "In stabilized read\n";
 		exit(0);
 	}
 	
 	
 }
 
-void readGranularLayers(vector<granularLayer> &granularLayerVector){
+void readGranularLayers(vector<granularLayer> &granularLayerVector, string granularLayersInputFile){
 	int i, noOfGranularLayers;
 	string stemp;
 	ifstream inputFile;
 	
 	try{
 		
-		inputFile.open("constant/granularLayersDict.csv");
+		inputFile.open("constant/"+granularLayersInputFile);
 		//Check if file opens, else throw exception
 		if(!inputFile.is_open()) {
-				throw runtime_error("Could not open granularLayersDict file, check file name and path.\n");
+				throw runtime_error("Could not open "+ granularLayersInputFile +", check file name and path.\n");
 			}
-		
-		getline(inputFile,stemp,','); //Object
-		getline(inputFile,stemp); //Read object
-		
-		//Check if object is granularLayers
-		if(!stemp.compare("granularLayers")) {
-			throw runtime_error("This file is not for granular layers. Check object field in file.\n");
-		}
 		
 		//Read number of layers
 		getline(inputFile,stemp,','); //Layers keyword
@@ -119,7 +105,7 @@ void readGranularLayers(vector<granularLayer> &granularLayerVector){
 			//Check final layer thickness. Note that layer thickness in input file is set in meters
 			if(i==noOfGranularLayers-1){
 				if(granularLayerVector[i].thickness<1.0){
-					cout << "Current subgrade thickness is " << granularLayerVector[i].thickness << " mm.\n";
+					cout << "Current subgrade thickness is " << granularLayerVector[i].thickness*1000 << " mm.\n";
 					throw runtime_error("Subgrade must be thick, at least 1000 mm, but preferably several thousand mm.\n");
 				}
 			}
@@ -155,31 +141,24 @@ void readGranularLayers(vector<granularLayer> &granularLayerVector){
 	}
 	catch(exception& e){
 		cout << "Error: " << e.what() << "\n";
+		cout << "In granular read\n";
 		exit(0);
 	}
 	
 }
 
-void readWeather(vector<weather> &weatherVector){
+void readWeather(vector<weather> &weatherVector, string weatherDataInputFile){
 	
 	int i, noOfWeatherCases;
 	string stemp;
 	ifstream inputFile;
 	
 	try{
-		inputFile.open("constant/weatherDict.csv");
+		inputFile.open("constant/"+weatherDataInputFile);
 		//Check if file opens, else throw exception
 		if(!inputFile.is_open()) {
-				throw runtime_error("Could not open weatherDict file, check file name and path.\n");
+				throw runtime_error("Could not open "+ weatherDataInputFile +", check file name and path.\n");
 			}
-		
-		getline(inputFile,stemp,','); //Object
-		getline(inputFile,stemp); //Read object
-		
-		//Check if object is weather
-		if(!stemp.compare("weather")) {
-			throw runtime_error("This file is not for weather. Check object field in file.\n");
-		}
 		
 		//Read number of cases
 		getline(inputFile,stemp,','); //Cases keyword
@@ -218,6 +197,7 @@ void readWeather(vector<weather> &weatherVector){
 	}
 	catch(exception& e){
 		cout << "Error: " << e.what() << "\n";
+		cout << "In weather read\n";
 		exit(0);
 	}
 	

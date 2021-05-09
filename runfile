@@ -1,4 +1,4 @@
 #!/bin/bash
 
 make illithermfv
-./illithermfv.out
+./illithermfv.out stabilizedLayersDict.csv granularLayersDict.csv weatherDict.csv output.csv

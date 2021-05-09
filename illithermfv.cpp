@@ -1,6 +1,6 @@
 #include "illithermfvheaders.h"
 
-int main(){
+int main(int argc,char* argv[]){
 	
 	/*Declarations*/
 	int i, noOfElements;
@@ -10,14 +10,14 @@ int main(){
 	vector<float> x,dx,alpha,T,Tnew;
 	vector<float> a,b,c,d;
 	float solarrad, qirr, qconv, qrad;
-	float dt = 60.0, xi = -0.3;
+	float dt = 600.0, xi = -0.1; //dt in seconds, xi in C/m
 	int nt;
 	ofstream fout;
 	
 	//Read data
-	readStabilizedLayers(stabilizedLayerVector);
-	readGranularLayers(granularLayerVector);
-	readWeather(weatherVector);
+	readStabilizedLayers(stabilizedLayerVector,argv[1]);
+	readGranularLayers(granularLayerVector,argv[2]);
+	readWeather(weatherVector,argv[3]);
 	
 	//Define mesh
 	noOfElements = 0;
@@ -44,7 +44,7 @@ int main(){
 	stiffnessmat(a, b, c, x, dx, alpha, dt, noOfElements);
 	
 	//Create output file
-	fout.open("output.csv",ios::trunc);
+	fout.open(argv[4],ios::trunc);
 	
 	//Write headers in output file
 	fout << "Year" << "," << "Month" << "," << "Day" << "," << "Hour" << ",";
@@ -93,7 +93,6 @@ int main(){
 		
 	}
 	
-	//cout << T[0] << endl;
 	fout.close();
 	
 	return 0;

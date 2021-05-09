@@ -81,9 +81,9 @@ class weather
 };
 
 /*Function prototypes*/
-void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector);
-void readGranularLayers(vector<granularLayer> &granularLayerVector);
-void readWeather(vector<weather> &weatherVector);
+void readStabilizedLayers(vector<stabilizedLayer> &stabilizedLayerVector, string stabilizedLayersInputFile);
+void readGranularLayers(vector<granularLayer> &granularLayerVector, string granularLayersInputFile);
+void readWeather(vector<weather> &weatherVector, string weatherDataInputFile);
 void defineMesh(vector<float> &x, vector<float> &dx, vector<float> &alpha, vector<stabilizedLayer> stabilizedLayerVector, vector<granularLayer> granularLayerVector, int noOfElements);
 float solar(weather weatherObject);
 float longwave(weather weatherObject, float Ts, float emissivity);
