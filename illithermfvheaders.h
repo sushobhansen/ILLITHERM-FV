@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <stdlib.h>
 #include <string>
@@ -91,3 +92,6 @@ float convection(weather weatherObject, float Ts);
 void solve(vector<float>& Tnew, vector<float> a, vector<float> b, vector<float> c, vector<float> d, int noOfElements);
 void stiffnessmat(vector<float>& a, vector<float>& b, vector<float>& c, vector<float> x, vector<float> dx, vector<float> alpha, float dt, int noOfElements);
 void rhsvector(vector<float>& d, vector<float> T, vector<float> x, vector<float> dx, vector<float> alpha, float dt, float qrad, float xi, int noOfElements);
+void WriteMEPDG(vector<float> x, vector<float> T, int N, float thickness, int Ni, int n, ofstream& fMEPDG, int timestamp);
+void QuadraticFit(vector<float> x, vector<float> T, int N, vector<float> xi, vector<float>& Ti, int Ni, int n);
+vector<float> pwl_value_1d ( int nd, vector<float> xd, vector<float> yd, int ni, vector<float> xi );

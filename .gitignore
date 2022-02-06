@@ -9,5 +9,7 @@
 *.rar
 *.docx
 *.csv
+*.dat
 !constant/*.csv
 validation/
+

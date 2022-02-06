@@ -1,8 +1,8 @@
 #Makefile for ILLITHERM-FV
 
 PROGRAM = illithermfv
-SOURCE = illithermfv.cpp readdata.cpp mesh.cpp surfaceflux.cpp solution.cpp
-OBJECTS = illithermfv.o readdata.o mesh.o surfaceflux.o solution.o
+SOURCE = illithermfv.cpp readdata.cpp mesh.cpp surfaceflux.cpp solution.cpp MEPDG.cpp
+OBJECTS = illithermfv.o readdata.o mesh.o surfaceflux.o solution.o MEPDG.o
 ARCHIVE = illithermfv.tar
 
 CC = g++

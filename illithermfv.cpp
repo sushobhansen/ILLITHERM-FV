@@ -14,6 +14,11 @@ int main(int argc,char* argv[]){
 	int nt;
 	ofstream fout;
 	
+	//Variables for MEPDG format solution
+	ofstream fMEPDG;
+	vector<float> xPCC, TPCC;
+	int timestamp;
+	
 	//Read data
 	readStabilizedLayers(stabilizedLayerVector,argv[1]);
 	readGranularLayers(granularLayerVector,argv[2]);
@@ -45,6 +50,8 @@ int main(int argc,char* argv[]){
 	
 	//Create output file
 	fout.open(argv[4],ios::trunc);
+	fMEPDG.open("ThermalPCC_ILLITHERM.dat",ios::trunc);
+	fMEPDG << fixed << setprecision(1) << showpoint;
 	
 	//Write headers in output file
 	fout << "Year" << "," << "Month" << "," << "Day" << "," << "Hour" << ",";
@@ -61,9 +68,7 @@ int main(int argc,char* argv[]){
 	
 	//Begin loop for each weather case
 	for(int i=0;i<weatherVector.size();i++){
-		
-		//Tnew.assign(noOfElements,0.0);
-		
+		cout << "Analyzing hour " << i << " of " << weatherVector.size() << endl;
 		//Calculate solar energy ( assumed constant over the hour)
 		solarrad = solar(weatherVector[i]);
 		
@@ -91,9 +96,17 @@ int main(int argc,char* argv[]){
 		}
 		fout << endl;
 		
+		//Write to MEPDG format (top stabilizedLayer only)
+		xPCC = vector<float>(x.begin(),x.begin()+stabilizedLayerVector[0].nodes);
+		TPCC = vector<float>(T.begin(),T.begin()+stabilizedLayerVector[0].nodes);
+		timestamp = weatherVector[i].Year*1E6 + weatherVector[i].Month*1E4 + weatherVector[i].Day*1E2 + weatherVector[i].Hour;
+		
+		WriteMEPDG(xPCC,TPCC,stabilizedLayerVector[0].nodes,stabilizedLayerVector[0].thickness,11,2,fMEPDG,timestamp);
+		
 	}
 	
 	fout.close();
+	fMEPDG.close();
 	
 	return 0;
 }
