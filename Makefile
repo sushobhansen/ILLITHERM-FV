@@ -15,10 +15,10 @@ OPTIONS = -std=c++11
 	$(CC) $(OPTIONS) -c -o $@ $< $(CFLAGS)
 
 $(PROGRAM):	$(OBJECTS)
-	$(CC) $(OPTIONS) -o $(PROGRAM).out $(OBJECTS) $(CFLAGS)
+	$(CC) $(OPTIONS) -o $(PROGRAM).exe $(OBJECTS) $(CFLAGS)
 	
 clean: 
-	rm -f $(OBJECTS) $(PROGRAM).out *.tar *.plt
+	rm -f $(OBJECTS) $(PROGRAM).exe *.tar *.plt
 	
 rebuild:
 	clean $(PROGRAM)
