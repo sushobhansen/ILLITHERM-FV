@@ -6,7 +6,7 @@ OBJECTS = illithermfv.o readdata.o mesh.o surfaceflux.o solution.o MEPDG.o
 ARCHIVE = illithermfv.tar
 
 CC = g++
-CFLAGS = -lm -I.
+CFLAGS = -fPIC -static -static-libgcc -static-libstdc++ -lm -I.
 DEPS = illithermfvheaders.h
 OPTIONS = -std=c++11
 #OPTIONS = -std=c++11 -g -debug extended -traceback -O0

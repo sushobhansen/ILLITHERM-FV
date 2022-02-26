@@ -10,6 +10,8 @@
 *.docx
 *.csv
 *.dat
+*.dll
+*.exe
 !constant/*.csv
 validation/
 
