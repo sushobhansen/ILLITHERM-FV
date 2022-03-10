@@ -5,7 +5,7 @@
  *				Copyright (c) Sushobhan Sen, 2018
  ------------------------------------------------------------------------*/
  
- Variable definitions
+ ## Variable definitions
  
  /*------------------------granularLayersDict----------------------------
  
@@ -66,7 +66,7 @@
  
  *emissivity	float	Emissivity - required first layer only, set others to null
  
- *nodes		int			number of nodes in the layer
+ *nodes		int			number of nodes in the layer (in general, node spacing should be approx 25 mm for best results)
  
  *Variables must be comma delimited
  
@@ -99,6 +99,15 @@
  
  -------------------------------------------------------------------------*/
  
- **To compile:** make illithermfv
+ ## Instructions to run the program
+ **To compile:** `make illithermfv`
  
- **To run:** ./illithermfv
+ **To run:** `./illithermfv.out stabilizedLayersDict.csv granularLayersDict.csv weatherDict.csv output.csv`
+ The first argument is the file with stabilized layer inputs, the second argument the granular layer inputs, and the third the weather inputs. All three of these **must** in the `constant/` directory, though the names can be changed (must be CSV formatted). The last argument is the name of the output file, which will always be written in CSV format regardless of the extension. 
+ 
+ **Note on running with Windows:** In the Makefile, change *.out to *.exe and make sure to compile with Cygwin or MinGW (switch to the `Windows` branch for a version of the Makefile that does this). If porting to a different computer, compile with MinGW and include `cygwin.dll` with the package. To force the program to use the local `cygwin.dll`, copy the `illithermfv.exe` file and add the `.local` extension to it.
+ 
+ ## Output format
+ The program generates two output files containing the temperature profiles for every hour in the weather file. These are:
+ - **output.csv** (or whatever is the last user argument): This will be a CSV file. The first row contains timestamp headers, followed by the depth of each node (*in mm*) from the surface. Note that this being a finite volume formulation, there is no node at the surface itself; the user can use a simple piecewise linear interpolation to calculate temperatures at other nodes. Each of the next lines (one per each record in the weather input file) contains the year, month, day, hour, and then each of the nodal temperatures for that time (*in C*).
+ - **ThermalPCC_ILLITHERM.dat** (the name is hard-coded for now): This is an MEPDG-style file that directly mimics the ThermalPCC.dat file format that is used by PavementME. It contains the hourly temperature profile in the surface layer only. Temperatures (*in F*) are reported from the surface to the bottom of the topmost layer at 11 equally-spaced nodes (spacing = thickness/10). The first column contains a time stamp of the format yyyy-mm-dd-hh, again following the MEPDG format. These values are evaluated using piecewise linear interpolation, the code is contained in the `MEPDG.cpp` file.

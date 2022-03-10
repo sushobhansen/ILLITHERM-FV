@@ -12,4 +12,6 @@
 *.dat
 !constant/*.csv
 validation/
+*.dll
+*.exe
 
